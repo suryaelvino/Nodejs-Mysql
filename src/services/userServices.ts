@@ -70,14 +70,12 @@ class UserService {
             limit,
             offset: (page - 1) * limit
         });
-
         const timeoutPromise = new Promise<never>((_, reject) => {
             setTimeout(() => {
                 reject(new Error('Request timed out'));
             }, this.timeout);
         });
-
-        const result = await Promise.race([usersPromise, timeoutPromise]);
+        const result:any = await Promise.race([usersPromise, timeoutPromise]);
         return result;
     }
 
@@ -85,6 +83,62 @@ class UserService {
         const page = parseInt(pageString) || 1;
         const limit = parseInt(limitString) || 10;
         return { page, limit };
+    }
+
+    async getUserByIdWithTimeout(userId: string) {
+        const userPromise = User.findOne({ where: { id: userId }, limit: 1 });
+        const timeoutPromise = new Promise<never>((_, reject) => {
+            setTimeout(() => {
+                reject(new Error('Request timed out'));
+            }, this.timeout);
+        });
+        const result:any = await Promise.race([userPromise, timeoutPromise]);
+        return result;
+    }
+
+    async updateUserWithTimeout(userId: string, userData: any) {
+        const user = await User.findByPk(userId);
+        if (!user) {
+            throw new Error('User not found');
+        }
+        const updatePromise = user.update(userData);
+        const timeoutPromise = new Promise<never>((_, reject) => {
+            setTimeout(() => {
+                reject(new Error('Request timed out'));
+            }, this.timeout);
+        });
+        await Promise.race([updatePromise, timeoutPromise]);
+        return user;
+    }
+
+    async updatePwUserWithTimeout(userId: string, newPassword: string) {
+        const user = await User.findByPk(userId);
+        if (!user) {
+            throw new Error('User not found');
+        }
+        const updatePromise = user.update({ password: hashPassword(newPassword) });
+        const timeoutPromise = new Promise<never>((_, reject) => {
+            setTimeout(() => {
+                reject(new Error('Request timed out'));
+            }, this.timeout);
+        });
+        await Promise.race([updatePromise, timeoutPromise]);
+        return { message: `Password updated for user ${userId}` };
+    }
+
+    async deleteUserWithTimeout(userId: string) {
+        const user = await User.findByPk(userId);
+        if (!user) {
+            throw new Error('User not found');
+        }
+        const deletePromise = user.destroy();
+        const timeoutPromise = new Promise<never>((_, reject) => {
+            setTimeout(() => {
+                reject(new Error('Request timed out'));
+            }, this.timeout);
+        });
+        await Promise.race([deletePromise, timeoutPromise]);
+        return { message: `Success delete ${userId}` };
     }
 }
 
