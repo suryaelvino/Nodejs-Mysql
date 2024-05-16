@@ -4,6 +4,9 @@ import rateLimit from 'express-rate-limit';
 import bodyParser from 'body-parser';
 import { userRoutes } from './src/routes/userRoutes';
 import { authenticateAdmin, authenticateUser } from './src/helpers/token';
+import dotenv from 'dotenv';
+
+dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 

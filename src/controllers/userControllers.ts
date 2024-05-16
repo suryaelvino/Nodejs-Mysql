@@ -2,54 +2,36 @@ import { Request, Response } from 'express';
 import User from '../models/userModels';
 import { hashPassword } from '../helpers/bcrypt';
 import { Op } from 'sequelize';
+import logs from "../logging/log"
+import UserService from '../services/userServices';
+const myService = 'User Service';
+const logger = logs(myService);
+
 class UserController {
 
-    async createUser(req:Request, res:Response) {
+    async createUser(req: Request, res: Response) {
         try {
             const { name, email, phonenumber, password, role } = req.body;
-            const existingUser = await User.findOne({
-                where: {
-                    [Op.or]: [{ email }, { phonenumber }]
-                }
-            });
-            if (existingUser) {
-                if (existingUser.email === email) {
-                    return res.status(400).json({ error: 'Email already exists' });
-                }
-                if (existingUser.phonenumber === phonenumber) {
-                    return res.status(400).json({ error: 'Phonenumber already exists' });
-                }
-            }
-            const hashedPassword = hashPassword(password);
-            const newUser = await User.create({
-                name,
-                email,
-                phonenumber,
-                password: hashedPassword,
-                role,
-                status: 'ACTIVATE',
-                created_at: new Date().valueOf(),
-                updated_at: new Date().valueOf()
-            });
+            const newUser = await UserService.createUserWithTimeout(name, email, phonenumber, password, role);
+            logger.info(`Success register ${email}`)
             return res.status(201).json(newUser);
         } catch (error) {
+            if (error.message === 'Request timed out') {
+                logger.error(`Failed with RTO`);
+                return res.status(408).json({ error: 'Request timed out' });
+            }
+            logger.error(`Internal server error`);
             console.error('Error creating user:', error);
             return res.status(500).json({ error: 'Internal server error' });
         }
     }
 
-
     async getAllUsers(req: Request, res: Response) {
         try {
-            const page = parseInt(req.query.page as string) || 1;
-            const limit = parseInt(req.query.limit as string) || 10;
-            const offset = (page - 1) * limit;
-            const { count, rows } = await User.findAndCountAll({
-                order: [['created_at', 'DESC']],
-                limit,
-                offset
-            });
+            const { page, limit } = UserService.parsePageAndLimit(req.query.page as string, req.query.limit as string);
+            const { count, rows } = await UserService.getAllUsersWithTimeout(page, limit);
             const totalPages = Math.ceil(count / limit);
+            logger.info(`Success get list users`);
             return res.status(200).json({
                 totalUsers: count,
                 totalPages,
@@ -58,6 +40,7 @@ class UserController {
             });
         } catch (error) {
             console.error('Error fetching users:', error);
+            logger.error(`Internal server error`);
             return res.status(500).json({ error: 'Internal server error' });
         }
     }

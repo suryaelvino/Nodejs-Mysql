@@ -27,7 +27,9 @@
     "mysql2": "^3.9.7",
     "nodemon": "^3.1.0",
     "sequelize": "^6.37.3",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "winston": "^3.13.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
