@@ -3,3 +3,8 @@
 {"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-19 11:57:04"}
 {"level":"error","message":"Failed with RTO","service":"User Service","timestamp":"2024-05-19 11:57:04"}
 {"level":"error","message":"Internal server error With getAllUsers","service":"User Service","timestamp":"2024-05-19 11:57:04"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-19 11:58:23"}
+{"level":"error","message":"Internal server error create users","service":"User Service","timestamp":"2024-05-19 11:58:23"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-19 11:58:23"}
+{"level":"error","message":"Failed with RTO","service":"User Service","timestamp":"2024-05-19 11:58:23"}
+{"level":"error","message":"Internal server error With getAllUsers","service":"User Service","timestamp":"2024-05-19 11:58:23"}
