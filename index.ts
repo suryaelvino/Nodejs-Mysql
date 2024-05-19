@@ -52,16 +52,16 @@ function registerService(routes: any) {
             case 'get':
                 if (adminpath) {
                     // app.get(url, cors(corsOptions), authenticateAdmin, limiter(60), route.handler);
-                    app.get(url, cors(corsOptions), limiter(60), route.handler);
+                    app.get(url, cors(corsOptions), limiter(600), route.handler);
                 }
                 else {
                     // app.get(url, cors(corsOptions), authenticateUser , limiter(60), route.handler);
-                    app.get(url, cors(corsOptions), limiter(60), route.handler);
+                    app.get(url, cors(corsOptions), limiter(600), route.handler);
                 }
                 break;
             case 'post':
                 if (withoutToken) {
-                    app.post(url, cors(corsOptions), limiter(10), route.handler);
+                    app.post(url, cors(corsOptions), limiter(100), route.handler);
                 }
                 else if (adminpath) {
                     // app.post(url, cors(corsOptions), authenticateAdmin, limiter(60), route.handler);

@@ -1,0 +1,12 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 30
+      arrivalRate: 200
+scenarios:
+  - flow:
+      - get:
+          url: "/api/users/getlist"
+          withQueryParams:
+            page: 1
+            limit: 10
