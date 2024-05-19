@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "D:\\Project\\Nodejs-Mysql\\src\\logging\\logs\\.27dda801316a73d48b96ba88475964d418a21339-audit.json",
+    "files": [
+        {
+            "date": 1716057545805,
+            "name": "D:\\Project\\Nodejs-Mysql\\src\\logging\\logs\\application-2024-05-19.log",
+            "hash": "f26051bcbbd0beb35a53eda87d29fa680903bc0696b6cfba21fea867cb4040e3"
+        }
+    ],
+    "hashType": "sha256"
+}

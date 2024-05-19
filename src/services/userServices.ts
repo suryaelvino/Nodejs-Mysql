@@ -51,7 +51,7 @@ class UserService {
         });
 
         try {
-            const result:any = await Promise.race([existingUserPromise, timeoutPromise]);
+            const result: any = await Promise.race([existingUserPromise, timeoutPromise]);
             if (result && result.timeout) {
                 throw new Error('Request timed out');
             }
@@ -70,20 +70,22 @@ class UserService {
             limit,
             offset: (page - 1) * limit
         });
+    
         const timeoutPromise = new Promise<never>((_, reject) => {
             setTimeout(() => {
                 reject(new Error('Request timed out'));
             }, this.timeout);
         });
-        const result:any = await Promise.race([usersPromise, timeoutPromise]);
-        return result;
+    
+        try {
+            const result = await Promise.race([usersPromise, timeoutPromise]);
+            return result;
+        } catch (error) {
+            throw error;
+        }
     }
-
-    parsePageAndLimit(pageString: string, limitString: string) {
-        const page = parseInt(pageString) || 1;
-        const limit = parseInt(limitString) || 10;
-        return { page, limit };
-    }
+    
+    
 
     async getUserByIdWithTimeout(userId: string) {
         const userPromise = User.findOne({ where: { id: userId }, limit: 1 });

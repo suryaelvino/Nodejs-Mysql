@@ -11,7 +11,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const limiter = (maxRequests: number) => rateLimit({
-    windowMs: 1 * 60 * 1000,
+    windowMs: 1 * 1000,
     max: maxRequests,
     standardHeaders: true,
     legacyHeaders: false,
@@ -61,7 +61,7 @@ function registerService(routes: any) {
                 break;
             case 'post':
                 if (withoutToken) {
-                    app.post(url, cors(corsOptions), limiter(5), route.handler);
+                    app.post(url, cors(corsOptions), limiter(10), route.handler);
                 }
                 else if (adminpath) {
                     // app.post(url, cors(corsOptions), authenticateAdmin, limiter(60), route.handler);
@@ -107,3 +107,5 @@ function registerService(routes: any) {
 app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`);
 });
+
+export { app };
