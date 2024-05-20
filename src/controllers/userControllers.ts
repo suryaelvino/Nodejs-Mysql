@@ -53,7 +53,6 @@ class UserController {
         }
     }
     
-    
     async getUserById(req: Request, res: Response) {
         try {
             const userId = req.params.id;
@@ -64,24 +63,30 @@ class UserController {
             logger.info(`Success get detail users ${userId}`);
             return res.status(200).json(user);
         } catch (error) {
-            console.error('Error fetching user:', error);
-            logger.error(`Failed get detail users ${req.params.id}`);
-            return res.status(500).json({ error: 'Internal server error' });
+            if (error.message === 'Request timed out') {
+                logger.error(`Request timed out while fetching user ${req.params.id}`);
+                return res.status(408).json({ error: 'Request timed out' });
+            } else {
+                logger.error(`Failed get detail users ${req.params.id}`);
+                return res.status(500).json({ error: 'Internal server error' });
+            }
         }
-    }
+    }    
 
     async updateUser(req: Request, res: Response) {
         try {
             const userId = req.params.id;
             const { name, email, phonenumber, password } = req.body;
-            const updatedUser = await UserService.updateUserWithTimeout(userId, { name, email, phonenumber, password });
-            logger.info(`Success update users ${userId}`);
-            return res.status(200).json(updatedUser);
-        } catch (error) {
-            if (error.message === 'User not found') {
+            const user = await UserService.updateUserWithTimeout(userId, { name, email, phonenumber, password });
+            if (!user) {
                 return res.status(404).json({ error: 'User not found' });
             }
-            console.error('Error updating user:', error);
+            logger.info(`Success update users ${userId}`);
+            return res.status(200).json(user);
+        } catch (error) {
+            if (error.message === 'Request timed out') {
+                return res.status(408).json({ error: 'Request timed out' });
+            }
             logger.error(`Failed update users ${req.params.id}`);
             return res.status(500).json({ error: 'Internal server error' });
         }
@@ -91,30 +96,36 @@ class UserController {
         try {
             const userId = req.params.id;
             const { password } = req.body;
+            const user = await UserService.getUserByIdWithTimeout(userId);
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
             const result = await UserService.updatePwUserWithTimeout(userId, password);
             logger.info(`Success update password for user ${userId}`);
             return res.status(200).json(result);
         } catch (error) {
-            if (error.message === 'User not found') {
-                return res.status(404).json({ error: 'User not found' });
+            if (error.message === 'Request timed out') {
+                return res.status(408).json({ error: 'Request timed out' });
             }
-            console.error('Error updating password:', error);
             logger.error(`Failed update password for user ${req.params.id}`);
             return res.status(500).json({ error: 'Internal server error' });
         }
     }
-
+    
     async deleteUser(req: Request, res: Response) {
         try {
             const userId = req.params.id;
+            const user = await UserService.getUserByIdWithTimeout(userId);
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
             const result = await UserService.deleteUserWithTimeout(userId);
             logger.info(`Success delete users ${userId}`);
             return res.status(200).json(result);
         } catch (error) {
-            if (error.message === 'User not found') {
-                return res.status(404).json({ error: 'User not found' });
+            if (error.message === 'Request timed out') {
+                return res.status(408).json({ error: 'Request timed out' });
             }
-            console.error('Error deleting user:', error);
             logger.error(`Failed delete users ${req.params.id}`);
             return res.status(500).json({ error: 'Internal server error' });
         }

@@ -85,8 +85,6 @@ class UserService {
         }
     }
     
-    
-
     async getUserByIdWithTimeout(userId: string) {
         const userPromise = User.findOne({ where: { id: userId }, limit: 1 });
         const timeoutPromise = new Promise<never>((_, reject) => {
