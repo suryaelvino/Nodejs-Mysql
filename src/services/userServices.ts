@@ -1,17 +1,18 @@
 // user.service.ts
-import { Op } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
 import User from '../models/userModels';
 import { hashPassword } from '../helpers/bcrypt';
 import dotenv from 'dotenv';
-
+import {sequelize} from '../database/db'
 dotenv.config();
 
 class UserService {
 
-    timeout: number = parseInt(process.env.TIMEOUT_RESPONSE) || 15000;
+    timeout: number = parseInt(process.env.TIMEOUT_RESPONSE) || 10000;
 
     async findExistingUser(email: string, phonenumber: string) {
         return await User.findOne({
+            attributes: ['email', 'phonenumber'],
             where: {
                 [Op.or]: [{ email }, { phonenumber }]
             }
@@ -43,29 +44,37 @@ class UserService {
     }
 
     async createUserWithTimeout(name: string, email: string, phonenumber: string, password: string, role: string) {
-        const existingUserPromise = this.findExistingUser(email, phonenumber);
-        const timeoutPromise = new Promise((_, reject) => {
-            setTimeout(() => {
-                reject(new Error('Request timed out'));
-            }, this.timeout);
-        });
-
         try {
-            const result: any = await Promise.race([existingUserPromise, timeoutPromise]);
-            if (result && result.timeout) {
-                throw new Error('Request timed out');
+            const timeoutPromise = new Promise((_, reject) => {
+                setTimeout(() => {
+                    reject(new Error('Request timed out'));
+                }, this.timeout);
+            });
+            const existingUser = await this.findExistingUser(email, phonenumber);
+            if (existingUser) {
+                if (existingUser.email === email) {
+                    throw new Error('Email already exists');
+                }
+                if (existingUser.phonenumber === phonenumber) {
+                    throw new Error('Phonenumber already exists');
+                }
             }
-            if (result) {
-                this.handleExistingUser(result, email, phonenumber);
-            }
-            return await this.createNewUser(name, email, phonenumber, password, role);
+            const hashedPassword = hashPassword(password);
+            const newUser = await this.createNewUser(name, email, phonenumber, hashedPassword, role);
+            return newUser;
         } catch (error) {
-            throw error;
+            if (error.message === 'Request timed out') {
+                throw error;
+            }
+            throw new Error('Internal server error');
         }
     }
-
+    
+    
+    
     async getAllUsersWithTimeout(page: number, limit: number) {
         const usersPromise = User.findAndCountAll({
+            attributes: ['id', 'name', 'email'],
             order: [['created_at', 'DESC']],
             limit,
             offset: (page - 1) * limit

@@ -1,0 +1,226 @@
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 14:15:05"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 14:29:11"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 14:29:42"}
+{"level":"error","message":"Internal server error create users","service":"User Service","timestamp":"2024-05-21 15:02:22"}
+{"level":"error","message":"Internal server error create users","service":"User Service","timestamp":"2024-05-21 15:02:35"}
+{"level":"error","message":"Internal server error create users","service":"User Service","timestamp":"2024-05-21 15:02:36"}
+{"level":"error","message":"Internal server error create users","service":"User Service","timestamp":"2024-05-21 15:02:37"}
+{"level":"error","message":"Internal server error create users","service":"User Service","timestamp":"2024-05-21 15:02:38"}
+{"level":"error","message":"Internal server error create users: Transaction cannot be rolled back because it has been finished with state: rollback","service":"User Service","timestamp":"2024-05-21 15:03:39"}
+{"level":"error","message":"Internal server error create users: Transaction cannot be rolled back because it has been finished with state: rollback","service":"User Service","timestamp":"2024-05-21 15:03:41"}
+{"level":"error","message":"Internal server error create users","service":"User Service","timestamp":"2024-05-21 15:06:25"}
+{"level":"error","message":"Internal server error create users","service":"User Service","timestamp":"2024-05-21 15:06:27"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 15:08:45"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 15:35:01"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 15:37:37"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"error","message":"Failed with RTO","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"error","message":"Internal server error With getAllUsers","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"error","message":"Failed delete users validUserId","service":"User Service","timestamp":"2024-05-21 15:47:33"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"error","message":"Failed with RTO","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"error","message":"Internal server error With getAllUsers","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"error","message":"Failed delete users validUserId","service":"User Service","timestamp":"2024-05-21 15:52:19"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"error","message":"Failed with RTO","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"error","message":"Internal server error With getAllUsers","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"error","message":"Failed delete users validUserId","service":"User Service","timestamp":"2024-05-21 15:55:16"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 15:57:03"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"error","message":"Failed with RTO","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"error","message":"Internal server error With getAllUsers","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"error","message":"Failed delete users validUserId","service":"User Service","timestamp":"2024-05-21 15:57:04"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"error","message":"Failed delete users validUserId","service":"User Service","timestamp":"2024-05-21 16:20:33"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"error","message":"Failed delete users validUserId","service":"User Service","timestamp":"2024-05-21 16:23:45"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 17:01:59"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 17:01:59"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 17:01:59"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 17:01:59"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 17:01:59"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:01:59"}
+{"level":"info","message":"Success get detail users nonExistingUserId","service":"User Service","timestamp":"2024-05-21 17:01:59"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 17:01:59"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:01:59"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 17:01:59"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 17:02:00"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:02:00"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:02:00"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 17:02:00"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 17:03:56"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 17:06:06"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 17:10:22"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 17:27:27"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 17:28:17"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 17:33:01"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 17:33:55"}
+{"level":"info","message":"Success create users john@example.com","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"error","message":"Internal server error create users: Some internal error","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"info","message":"Success get list users","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"error","message":"Failed get list users with RTO","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"error","message":"Internal server error With get list users","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"info","message":"Success get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"error","message":"Request timed out while fetching user validUserId","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"error","message":"Failed get detail users validUserId","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"info","message":"Success update users validUserId","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"error","message":"Failed update users validUserId","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"info","message":"Success update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"error","message":"Failed update password for user validUserId","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"info","message":"Success delete users validUserId","service":"User Service","timestamp":"2024-05-21 17:35:29"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 19:24:20"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 19:24:36"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 19:31:03"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 19:35:19"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 19:35:31"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 19:37:26"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 19:44:48"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 19:49:12"}
+{"level":"info","message":"Success create users suryamohamad99@gmail.com","service":"User Service","timestamp":"2024-05-21 19:53:06"}

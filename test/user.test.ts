@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import UserController from '../src/controllers/userControllers';
 import UserService from '../src/services/userServices';
-
+import code from 'http-status-codes';
 jest.mock('../src/services/userServices', () => ({
   __esModule: true,
   default: {
@@ -14,16 +14,16 @@ jest.mock('../src/services/userServices', () => ({
       }
       return { id: 'mockUserId', name, email, phonenumber, password, role };
     }),
-    getAllUsersWithTimeout: jest.fn(),
-    getUserByIdWithTimeout: jest.fn(),
-    updateUserWithTimeout: jest.fn(),
-    updatePwUserWithTimeout: jest.fn(),
-    deleteUserWithTimeout: jest.fn(),
+    getAllUsersWithTimeout  : jest.fn(),
+    getUserByIdWithTimeout  : jest.fn(),
+    updateUserWithTimeout   : jest.fn(),
+    updatePwUserWithTimeout : jest.fn(),
+    deleteUserWithTimeout   : jest.fn(),
   },
 }));
 
-describe('UserController', () => {
-  describe('createUser', () => {
+describe('User Controller', () => {
+  describe('Create User', () => {
     it('should respond with status 201 and created user data', async () => {
       const req = {
         body: {
@@ -34,23 +34,30 @@ describe('UserController', () => {
           role: 'user'
         }
       } as Request;
-      const res = {
-        status: jest.fn(() => res),
-        json: jest.fn(),
-      } as unknown as Response;
-
-      await UserController.createUser(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(201);
-      expect(res.json).toHaveBeenCalledWith({
+    
+      const expectedUserData = {
         id: 'mockUserId',
         name: 'John Doe',
         email: 'john@example.com',
         phonenumber: '123456780',
         password: 'password123',
         role: 'user'
+      };
+      (UserService.createUserWithTimeout as jest.Mock).mockImplementation(async (name:string, email:string, phonenumber:string, password:string, role) => {
+        return expectedUserData;
       });
-    });
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn(),
+      } as unknown as Response;
+      await UserController.createUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(code.CREATED);
+      expect(res.json).toHaveBeenCalledWith({
+        message: "Success created user",
+        code : code.CREATED,
+        data: expectedUserData
+      });
+    });    
 
     it('should respond with status 400 when request body is incomplete', async () => {
       const req = {
@@ -67,15 +74,14 @@ describe('UserController', () => {
 
       await UserController.createUser(req, res);
 
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Request body is incomplete' });
+      expect(res.status).toHaveBeenCalledWith(code.BAD_REQUEST);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message: 'Request body is incomplete', 
+        code : code.BAD_REQUEST
+      });
     });
 
     it('should respond with status 408 when request times out', async () => {
-      jest.spyOn(UserService, 'createUserWithTimeout').mockImplementationOnce(async () => {
-        throw new Error('Request timed out');
-      });
-
       const req = {
         body: {
           name: 'Timeout User',
@@ -89,14 +95,16 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-
+      (UserService.createUserWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Request timed out'));
       await UserController.createUser(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(408);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Request timed out' });
+      expect(res.status).toHaveBeenCalledWith(code.REQUEST_TIMEOUT);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message: 'Request timed out',
+        code : code.REQUEST_TIMEOUT
+      });
     });
 
-    it('should respond with status 400 when email already exists', async () => {
+    it('should respond with status 409 when email already exists', async () => {
       const req = {
         body: {
           name: 'Existing Email User',
@@ -110,14 +118,16 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-
+      (UserService.createUserWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Email already exists'));
       await UserController.createUser(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(409);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Email already exists' });
+      expect(res.status).toHaveBeenCalledWith(code.CONFLICT);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message: 'Email already exists',
+        code : code.CONFLICT
+       });
     });
 
-    it('should respond with status 400 when phonenumber already exists', async () => {
+    it('should respond with status 409 when phonenumber already exists', async () => {
       const req = {
         body: {
           name: 'Existing Phonenumber User',
@@ -131,18 +141,16 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-
+      (UserService.createUserWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Phonenumber already exists'));
       await UserController.createUser(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(409);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Phonenumber already exists' });
+      expect(res.status).toHaveBeenCalledWith(code.CONFLICT);
+      expect(res.json).toHaveBeenCalledWith({
+        message: 'Phonenumber already exists',
+        code : code.CONFLICT
+      });
     });
 
     it('should respond with status 500 when server error occurs', async () => {
-      jest.spyOn(UserService, 'createUserWithTimeout').mockImplementationOnce(async () => {
-        throw new Error('Some internal error');
-      });
-
       const req = {
         body: {
           name: 'Internal Error User',
@@ -156,11 +164,13 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-
+      (UserService.createUserWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Internal server error'));
       await UserController.createUser(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Internal server error' });
+      expect(res.status).toHaveBeenCalledWith(code.INTERNAL_SERVER_ERROR);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message: 'Internal server error',
+        code : code.INTERNAL_SERVER_ERROR 
+      });
     });
   });
 
@@ -180,15 +190,17 @@ describe('UserController', () => {
       const req = { query: { page: '1', limit: '10' } } as unknown as Request;
       const res = { status: jest.fn(() => res), json: jest.fn() } as unknown as Response;
       await UserController.getAllUsers(req, res);
-      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.status).toHaveBeenCalledWith(code.OK);
       expect(res.json).toHaveBeenCalledWith({
-        totalUsers: 10,
-        totalPages: 1,
-        currentPage: 1,
-        users: [
+        total_users: 10,
+        total_pages: 1,
+        current_page: 1,
+        data: [
           { id: '1', name: 'User 1', email: 'test1@example.com', phonenumber: '1234567891', role: 'user' },
           { id: '2', name: 'User 2', email: 'test2@example.com', phonenumber: '1234567892', role: 'user' }
-        ]
+        ],
+        message: `success get all user in page 1 and limit 10`,
+        code: code.OK
       });
     });
 
@@ -197,8 +209,11 @@ describe('UserController', () => {
       const req = { query: { page: '1', limit: '10' } } as unknown as Request;
       const res = { status: jest.fn(() => res), json: jest.fn() } as unknown as Response;
       await UserController.getAllUsers(req, res);
-      expect(res.status).toHaveBeenCalledWith(408);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Request timed out' });
+      expect(res.status).toHaveBeenCalledWith(code.REQUEST_TIMEOUT);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message: 'Request timed out',
+        code: code.REQUEST_TIMEOUT
+       });
     });
 
     it('should respond with status 500 when internal server error occurs', async () => {
@@ -206,8 +221,11 @@ describe('UserController', () => {
       const req = { query: { page: '1', limit: '10' } } as unknown as Request;
       const res = { status: jest.fn(() => res), json: jest.fn() } as unknown as Response;
       await UserController.getAllUsers(req, res);
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Internal server error' });
+      expect(res.status).toHaveBeenCalledWith(code.INTERNAL_SERVER_ERROR);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message: 'Internal server error',
+        code: code.INTERNAL_SERVER_ERROR
+      });
     });
   });
 
@@ -224,40 +242,39 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-      const expectedUser = { /* expected user object */ };
-
-      // Memberikan tipe pada pemalsuan
+      const expectedUser = {id: 'validUserId'};
       (UserService.getUserByIdWithTimeout as jest.MockedFunction<typeof UserService.getUserByIdWithTimeout>).mockResolvedValueOnce(expectedUser);
-
       await UserController.getUserById(req, res);
-
       expect(UserService.getUserByIdWithTimeout).toHaveBeenCalledWith('validUserId');
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith(expectedUser);
+      expect(res.status).toHaveBeenCalledWith(code.OK);
+      expect(res.json).toHaveBeenCalledWith({
+        message : `Success get detail user with ${expectedUser.id}`,
+        code    : code.OK,
+        data    : expectedUser
+      });
     });
 
     it('should respond with status 404 when user is not found', async () => {
+      const expectedId = "nonExistingUserId";
       const req = {
-        params: { id: 'nonExistingUserId' }
+        params: { id: expectedId }
       } as unknown as Request;
       const res = {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-
-      // Memberikan tipe pada pemalsuan
       (UserService.getUserByIdWithTimeout as jest.MockedFunction<typeof UserService.getUserByIdWithTimeout>).mockResolvedValueOnce(null);
-
       await UserController.getUserById(req, res);
-
       expect(UserService.getUserByIdWithTimeout).toHaveBeenCalledWith('nonExistingUserId');
-      expect(res.status).toHaveBeenCalledWith(404);
-      expect(res.json).toHaveBeenCalledWith({ error: 'User not found' });
+      expect(res.status).toHaveBeenCalledWith(code.NOT_FOUND);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message : `User not found with ${expectedId}`,
+        code    : code.NOT_FOUND 
+      });
     });
 
     it('should respond with status 408 when request times out', async () => {
       jest.spyOn(UserService, 'getUserByIdWithTimeout').mockRejectedValueOnce(new Error('Request timed out'));
-
       const req = {
         params: { id: 'validUserId' }
       } as unknown as Request;
@@ -265,17 +282,17 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-
       await UserController.getUserById(req, res);
-
       expect(UserService.getUserByIdWithTimeout).toHaveBeenCalledWith('validUserId');
-      expect(res.status).toHaveBeenCalledWith(408);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Request timed out' });
+      expect(res.status).toHaveBeenCalledWith(code.REQUEST_TIMEOUT);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message : 'Request timed out',
+        code    : code.REQUEST_TIMEOUT 
+      });
     });
 
     it('should respond with status 500 when internal server error occurs', async () => {
       jest.spyOn(UserService, 'getUserByIdWithTimeout').mockRejectedValueOnce(new Error('Some internal error'));
-
       const req = {
         params: { id: 'validUserId' }
       } as unknown as Request;
@@ -283,12 +300,13 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-
       await UserController.getUserById(req, res);
-
       expect(UserService.getUserByIdWithTimeout).toHaveBeenCalledWith('validUserId');
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Internal server error' });
+      expect(res.status).toHaveBeenCalledWith(code.INTERNAL_SERVER_ERROR);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message : 'Internal server error',
+        code    : code.INTERNAL_SERVER_ERROR
+      });
     });
   });
 
@@ -317,24 +335,20 @@ describe('UserController', () => {
             status: jest.fn(() => res),
             json: jest.fn(),
         } as unknown as Response;
-
         (UserService.updateUserWithTimeout as jest.Mock).mockResolvedValueOnce(updatedUser);
-
         await UserController.updateUser(req, res);
-
-        expect(UserService.updateUserWithTimeout).toHaveBeenCalledWith('validUserId', {
-            name: 'Updated Name',
-            email: 'updated@example.com',
-            phonenumber: '987654321',
-            password: 'newPassword'
+        expect(res.status).toHaveBeenCalledWith(code.OK);
+        expect(res.json).toHaveBeenCalledWith({
+          message : `Success update user with ${updatedUser.id}`,
+          code    : code.OK,
+          data    : updatedUser
         });
-        expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith(updatedUser);
     });
 
     it('should respond with status 404 when user is not found', async () => {
+      const expectedId = "nonExistingUserId";
         const req = {
-            params: { id: 'nonExistingUserId' },
+            params: { id: expectedId },
             body: {
                 name: 'Updated Name',
                 email: 'updated@example.com',
@@ -346,19 +360,19 @@ describe('UserController', () => {
             status: jest.fn(() => res),
             json: jest.fn(),
         } as unknown as Response;
-
         (UserService.updateUserWithTimeout as jest.Mock).mockResolvedValueOnce(null);
-
         await UserController.updateUser(req, res);
-
-        expect(UserService.updateUserWithTimeout).toHaveBeenCalledWith('nonExistingUserId', {
-            name: 'Updated Name',
-            email: 'updated@example.com',
-            phonenumber: '987654321',
-            password: 'newPassword'
+        expect(UserService.updateUserWithTimeout).toHaveBeenCalledWith(expectedId, {
+            name        : 'Updated Name',
+            email       : 'updated@example.com',
+            phonenumber : '987654321',
+            password    : 'newPassword'
         });
-        expect(res.status).toHaveBeenCalledWith(404);
-        expect(res.json).toHaveBeenCalledWith({ error: 'User not found' });
+        expect(res.status).toHaveBeenCalledWith(code.NOT_FOUND);
+        expect(res.json).toHaveBeenCalledWith({ 
+          message : `User not found with ${expectedId}`,
+          code    : code.NOT_FOUND
+         });
     });
 
     it('should respond with status 408 when request times out', async () => {
@@ -375,19 +389,19 @@ describe('UserController', () => {
             status: jest.fn(() => res),
             json: jest.fn(),
         } as unknown as Response;
-
         (UserService.updateUserWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Request timed out'));
-
         await UserController.updateUser(req, res);
-
         expect(UserService.updateUserWithTimeout).toHaveBeenCalledWith('validUserId', {
             name: 'Updated Name',
             email: 'updated@example.com',
             phonenumber: '987654321',
             password: 'newPassword'
         });
-        expect(res.status).toHaveBeenCalledWith(408);
-        expect(res.json).toHaveBeenCalledWith({ error: 'Request timed out' });
+        expect(res.status).toHaveBeenCalledWith(code.REQUEST_TIMEOUT);
+        expect(res.json).toHaveBeenCalledWith({ 
+          message : 'Request timed out',
+          code    : code.REQUEST_TIMEOUT
+        });
     });
 
     it('should respond with status 500 when internal server error occurs', async () => {
@@ -404,19 +418,19 @@ describe('UserController', () => {
             status: jest.fn(() => res),
             json: jest.fn(),
         } as unknown as Response;
-
         (UserService.updateUserWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Internal server error'));
-
         await UserController.updateUser(req, res);
-
         expect(UserService.updateUserWithTimeout).toHaveBeenCalledWith('validUserId', {
             name: 'Updated Name',
             email: 'updated@example.com',
             phonenumber: '987654321',
             password: 'newPassword'
         });
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({ error: 'Internal server error' });
+        expect(res.status).toHaveBeenCalledWith(code.INTERNAL_SERVER_ERROR);
+        expect(res.json).toHaveBeenCalledWith({ 
+          message : 'Internal server error',
+          code    : code.INTERNAL_SERVER_ERROR
+        });
     });
   });
 
@@ -426,27 +440,28 @@ describe('UserController', () => {
     });
   
     it('should respond with status 200 and success message when password is updated', async () => {
+      let userId = 'validUser';
       const req = {
-        params: { id: 'validUserId' },
+        params: { id: userId },
         body: { password: 'newPassword' }
       } as unknown as Request;
       const res = {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-      const expectedSuccessMessage = { message: 'Password updated for user validUserId' };
-  
-      (UserService.getUserByIdWithTimeout as jest.Mock).mockResolvedValueOnce({ id: 'validUserId' });
-      (UserService.updatePwUserWithTimeout as jest.Mock).mockResolvedValueOnce(expectedSuccessMessage);
-  
+      (UserService.updatePwUserWithTimeout as jest.Mock).mockResolvedValueOnce({ id: userId });
       await UserController.updatePwUser(req, res);
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith(expectedSuccessMessage);
+      expect(res.status).toHaveBeenCalledWith(code.OK);
+      expect(res.json).toHaveBeenCalledWith({
+        message : `Success update password users with ${userId}`,
+        code    : code.OK
+      });
     });
 
     it('should respond with status 404 when user is not found', async () => {
+      let userId = 'nonExistingUserId';
       const req = {
-        params: { id: 'nonExistingUserId' },
+        params: { id: userId },
         body: { password: 'newPassword' }
       } as unknown as Request;
       const res = {
@@ -455,8 +470,11 @@ describe('UserController', () => {
       } as unknown as Response;
       (UserService.getUserByIdWithTimeout as jest.Mock).mockResolvedValueOnce(null);
       await UserController.updatePwUser(req, res);
-      expect(res.status).toHaveBeenCalledWith(404);
-      expect(res.json).toHaveBeenCalledWith({ error: 'User not found' });
+      expect(res.status).toHaveBeenCalledWith(code.NOT_FOUND);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message : `User not found with ${userId}`,
+        code    : code.NOT_FOUND 
+      });
     });
     
     it('should respond with status 408 when request times out', async () => {
@@ -468,14 +486,14 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-  
       (UserService.getUserByIdWithTimeout as jest.Mock).mockResolvedValueOnce({ id: 'validUserId' });
       (UserService.updatePwUserWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Request timed out'));
-  
       await UserController.updatePwUser(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(408);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Request timed out' });
+      expect(res.status).toHaveBeenCalledWith(code.REQUEST_TIMEOUT);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message  : 'Request timed out',
+        code      : code.REQUEST_TIMEOUT 
+      });
     });
   
     it('should respond with status 500 when internal server error occurs', async () => {
@@ -487,13 +505,14 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-  
       (UserService.getUserByIdWithTimeout as jest.Mock).mockResolvedValueOnce({ id: 'validUserId' });
       (UserService.updatePwUserWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Internal server error'));
-  
       await UserController.updatePwUser(req, res);
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Internal server error' });
+      expect(res.status).toHaveBeenCalledWith(code.INTERNAL_SERVER_ERROR);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message: 'Internal server error', 
+        code : code.INTERNAL_SERVER_ERROR
+      });
     });
   });  
   
@@ -503,31 +522,40 @@ describe('UserController', () => {
     });
 
     it('should respond with status 200 and deleted user data when successful', async () => {
-      const req = { params: { id: 'validUserId' } } as unknown as Request;
-      const user = { id: 'validUserId', name: 'John Doe' };
+      const userId:string = 'valudUserId';
+      const req = { params: { id: userId } } as unknown as Request;
+      const user = { id: userId, name: 'John Doe' };
       const res = {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-
       (UserService.getUserByIdWithTimeout as jest.Mock).mockResolvedValueOnce(user);
-      (UserService.deleteUserWithTimeout as jest.Mock).mockResolvedValueOnce({ message: 'User deleted successfully' });
-
+      (UserService.deleteUserWithTimeout as jest.Mock).mockResolvedValueOnce({  
+        message : `Success delete user with ${userId}`,
+        code    :  code.OK, 
+      });
       await UserController.deleteUser(req, res);
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({ message: 'User deleted successfully' });
+      expect(res.status).toHaveBeenCalledWith(code.OK);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message : `Success delete user with ${userId}`,
+        code    :  code.OK,
+      });
     });
 
     it('should respond with status 404 when user is not found', async () => {
-      const req = { params: { id: 'nonExistingUserId' } } as unknown as Request;
+      const userId:string = 'nonExistingUserId';
+      const req = { params: { id: userId } } as unknown as Request;
       const res = {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-      (UserService.getUserByIdWithTimeout as jest.Mock).mockResolvedValueOnce(null);
+      (UserService.getUserByIdWithTimeout as jest.Mock).mockResolvedValueOnce({id : 'existingUserId'});
       await UserController.deleteUser(req, res);
-      expect(res.status).toHaveBeenCalledWith(404);
-      expect(res.json).toHaveBeenCalledWith({ error: 'User not found' });
+      expect(res.status).toHaveBeenCalledWith(code.NOT_FOUND);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message : `User not found with ${userId}`,
+        code    : code.NOT_FOUND 
+      });
     });
 
     it('should respond with status 408 when request times out', async () => {
@@ -536,10 +564,14 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-      (UserService.getUserByIdWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Request timed out'));
+      (UserService.getUserByIdWithTimeout as jest.Mock).mockRejectedValueOnce({id: 'validUserId'});
+      (UserService.deleteUserWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Request timed out'));
       await UserController.deleteUser(req, res);
-      expect(res.status).toHaveBeenCalledWith(408);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Request timed out' });
+      expect(res.status).toHaveBeenCalledWith(code.REQUEST_TIMEOUT);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message : 'Request timed out', 
+        code    : code.REQUEST_TIMEOUT
+      });
     });
 
     it('should respond with status 500 when internal server error occurs', async () => {
@@ -548,10 +580,14 @@ describe('UserController', () => {
         status: jest.fn(() => res),
         json: jest.fn(),
       } as unknown as Response;
-      (UserService.getUserByIdWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Some internal error'));
+      (UserService.getUserByIdWithTimeout as jest.Mock).mockRejectedValueOnce({id: 'validUserId'});
+      (UserService.deleteUserWithTimeout as jest.Mock).mockRejectedValueOnce(new Error('Internal server error'));
       await UserController.deleteUser(req, res);
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Internal server error' });
+      expect(res.status).toHaveBeenCalledWith(code.INTERNAL_SERVER_ERROR);
+      expect(res.json).toHaveBeenCalledWith({ 
+        message : 'Internal server error',
+        code    : code.INTERNAL_SERVER_ERROR
+      });
     });
   });
 });

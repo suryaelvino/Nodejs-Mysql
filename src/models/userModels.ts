@@ -24,21 +24,36 @@ User.init(
             type: DataTypes.UUID,
             primaryKey: true,
             unique: true,
+            defaultValue: DataTypes.UUIDV4
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
+            unique: false,
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
+             // @ts-ignore
+             indexes: [
+                {
+                    unique: true,
+                    fields: ['email']
+                }
+            ]
         },
         phonenumber: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
+            // @ts-ignore
+            indexes: [
+                {
+                    unique: true,
+                    fields: ['phonenumber']
+                }
+            ]
         },
         password: {
             type: DataTypes.STRING,
@@ -56,12 +71,12 @@ User.init(
         created_at: {
             type: DataTypes.BIGINT,
             allowNull: false,
-            defaultValue: () => new Date().valueOf(), // Gunakan new Date().valueOf() untuk mendapatkan nilai timestamp epoch saat ini
+            defaultValue: () => new Date().valueOf(),
         },
         updated_at: {
             type: DataTypes.BIGINT,
             allowNull: false,
-            defaultValue: () => new Date().valueOf(), // Gunakan new Date().valueOf() untuk mendapatkan nilai timestamp epoch saat ini
+            defaultValue: () => new Date().valueOf()
         },
     },
     {
@@ -74,9 +89,10 @@ User.init(
 
 async function generateUniqueUUID(): Promise<string> {
     let uuid = uuidv4();
-    const existingUser = await User.findOne({ where: { id: uuid } });
+    let existingUser = await User.findOne({ attributes: ['id'], where: { id: uuid } });
     while (existingUser !== null) {
         uuid = uuidv4();
+        existingUser = await User.findOne({ attributes: ['id'], where: { id: uuid } });
     }
     return uuid;
 }
