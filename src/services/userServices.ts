@@ -1,9 +1,8 @@
 // user.service.ts
-import { Op, Transaction } from 'sequelize';
+import { Op } from 'sequelize';
 import User from '../models/userModels';
 import { hashPassword } from '../helpers/bcrypt';
 import dotenv from 'dotenv';
-import {sequelize} from '../database/db'
 dotenv.config();
 
 class UserService {
@@ -43,34 +42,28 @@ class UserService {
         return newUser;
     }
 
-    async createUserWithTimeout(name: string, email: string, phonenumber: string, password: string, role: string) {
+    async createUserWithTimeout(name:string, email:string, phonenumber:string, password:string, role:string) {
         try {
             const timeoutPromise = new Promise((_, reject) => {
                 setTimeout(() => {
                     reject(new Error('Request timed out'));
                 }, this.timeout);
             });
-            const existingUser = await this.findExistingUser(email, phonenumber);
-            if (existingUser) {
-                if (existingUser.email === email) {
-                    throw new Error('Email already exists');
-                }
-                if (existingUser.phonenumber === phonenumber) {
-                    throw new Error('Phonenumber already exists');
-                }
+            const existingUserPromise = this.findExistingUser(email, phonenumber);
+            const result:any = await Promise.race([existingUserPromise, timeoutPromise]);
+            if (result && result.timeout) {
+                throw new Error('Request timed out');
+            }
+            if (result) {
+                this.handleExistingUser(result, email, phonenumber);
             }
             const hashedPassword = hashPassword(password);
             const newUser = await this.createNewUser(name, email, phonenumber, hashedPassword, role);
             return newUser;
         } catch (error) {
-            if (error.message === 'Request timed out') {
-                throw error;
-            }
-            throw new Error('Internal server error');
+            throw error;
         }
     }
-    
-    
     
     async getAllUsersWithTimeout(page: number, limit: number) {
         const usersPromise = User.findAndCountAll({

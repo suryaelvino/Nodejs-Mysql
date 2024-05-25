@@ -1,20 +1,20 @@
 config:
   target: "http://localhost:3000"
   phases:
-    - duration: 1
-      arrivalRate: 1
+    - duration: 10
+      arrivalRate: 200
 scenarios:
   - flow:
-      # - get:
-      #     url: "/api/users/getlist"
-      #     withQueryParams:
-      #       page: 1
-      #       limit: 10
-      - post:
-          url: "/api/users/add"
-          json:
-            name: "surya{{__VU}}elvino"
-            email: "surya{{__VU}}@example.com"
-            phonenumber: "082332333{{__VU}}"
-            password: "12345678"
-            role: "developer"
+      - get:
+          url: "/api/users/getlist"
+          withQueryParams:
+            page: 1
+            limit: 10
+      # - post:
+      #     url: "/api/users/add"
+      #     json:
+      #       name: "surya{{__VU}}elvino"
+      #       email: "surya{{__VU}}@example.com"
+      #       phonenumber: "082332333{{__VU}}"
+      #       password: "12345678"
+      #       role: "developer"
