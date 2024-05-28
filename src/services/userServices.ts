@@ -67,7 +67,7 @@ class UserService {
     
     async getAllUsersWithTimeout(page: number, limit: number) {
         const usersPromise = User.findAndCountAll({
-            attributes: ['id', 'name', 'email'],
+            attributes: ['id', 'name', 'email', 'phonenumber'],
             order: [['created_at', 'DESC']],
             limit,
             offset: (page - 1) * limit

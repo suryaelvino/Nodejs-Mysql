@@ -7,7 +7,8 @@ import { authenticateAdmin, authenticateUser } from './src/helpers/token';
 import dotenv from 'dotenv';
 import cluster from 'cluster';
 import os from 'os';
-
+import crypto from 'crypto';
+import { time } from 'console';
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,6 +19,42 @@ const limiter = (maxRequests: number) => rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
 });
+
+function generateSignature(timestamp: string) {
+    const secretKey: string = process.env.URL_SECRET_KEY || '';
+    const signature = crypto.createHmac('sha256', secretKey).update(timestamp).digest('hex');
+    return signature;
+}
+
+function verifySignature(req: any, res: any, next: any) {
+    const receivedSignature = req.query.signature;
+    const receivedTimestamp = parseInt(req.query.timestamp);
+    const expectedSignature = generateSignature(receivedTimestamp.toString());
+    if (receivedSignature !== expectedSignature) {
+        return res.status(403).json({
+            message: `Invalid Signature`,
+            code: 403
+        });
+    }
+    const currentTimestamp = Math.floor(Date.now() / 1000);
+    const timeDifference = currentTimestamp - receivedTimestamp;
+    if (timeDifference > 120) {
+        return res.status(403).json({
+            message: `Expired Signature`,
+            code: 403
+        });
+    }
+    req.timestamp = receivedTimestamp;
+    next();
+}
+
+const timestamp = Math.floor(Date.now() / 1000);
+const signature = generateSignature(timestamp.toString());
+
+console.log("Generated Signature:", signature);
+console.log("Timestamp:", timestamp);
+
+app.use(verifySignature);
 
 app.use(cors());
 app.use(bodyParser.text());
@@ -102,7 +139,8 @@ function registerService(routes: any) {
 }
 
 if (cluster.isPrimary) {
-    const numCPUs = os.cpus().length;
+    // const numCPUs = os.cpus().length;
+    const numCPUs = 2;
     for (let i = 0; i < numCPUs; i++) {
         cluster.fork();
     }

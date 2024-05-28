@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/userModels';
 import logs from "../logging/log"
 import UserService from '../services/userServices';
+import { Worker } from 'worker_threads';
 import code from 'http-status-codes';
 const myService = 'User Service';
 const logger = logs(myService);
@@ -45,7 +46,6 @@ class UserController {
             });
         }
     }    
-    
     
     async getAllUsers(req: Request, res: Response) {
         try {
