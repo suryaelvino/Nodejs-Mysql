@@ -55,7 +55,7 @@ console.log("Generated Signature:", signature);
 console.log("Timestamp:", timestamp);
 
 app.use(verifySignature);
-
+app.use(express.static('public'))
 app.use(cors());
 app.use(bodyParser.text());
 app.use(bodyParser.json({ limit: "50mb" }));
