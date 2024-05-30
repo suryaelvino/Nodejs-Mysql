@@ -4,7 +4,7 @@ const sequelize = new Sequelize('test', 'root', 'Elvino12_', {
     host: 'localhost',
     dialect: 'mysql',
     pool: {
-        max: 100,
+        max: 200,
         min: 0,
         acquire: 30000,
         idle: 10000
@@ -14,7 +14,6 @@ const sequelize = new Sequelize('test', 'root', 'Elvino12_', {
 async function testDatabaseConnection() {
     try {
         await sequelize.authenticate();
-        console.log('Connection to the database has been established successfully.');
     } catch (err) {
         console.error('Unable to connect to the database:', err);
     }

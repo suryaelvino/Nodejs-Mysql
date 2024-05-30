@@ -34,6 +34,11 @@
             "date": 1716875851926,
             "name": "D:\\Project\\Nodejs-Mysql\\src\\logging\\logs\\application-2024-05-28.log",
             "hash": "3528fb0d834385d247d98bf31101a7439e7bef7789a663b6de754870f130fdf5"
+        },
+        {
+            "date": 1717080007744,
+            "name": "D:\\Project\\Nodejs-Mysql\\src\\logging\\logs\\application-2024-05-30.log",
+            "hash": "4767bddc40238c24f3e42d64c49b9ee8b7caa11fdd2319cb4b766dc40b97bfe8"
         }
     ],
     "hashType": "sha256"
